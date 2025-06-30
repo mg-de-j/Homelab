@@ -1,0 +1,6 @@
+docker network create arr_default
+docker network create torrent_default
+docker network create player_default
+docker network create nextcloud-aio
+docker network create nextcloud-aio_default
+docker network create proxy-netwerk

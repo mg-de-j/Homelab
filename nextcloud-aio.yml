@@ -1,0 +1,33 @@
+version: "3.6"
+
+networks:
+  nextcloud-aio:
+    external: true
+    name: "nextcloud-aio"
+  nextcloud-aio_default:
+    external: true
+    name: "nextcloud-aio_default"
+
+services:
+  nextcloud-aio-mastercontainer:
+    container_name: "nextcloud-aio-mastercontainer"
+    image: "nextcloud/all-in-one:latest"
+    environment:
+      # Het datapad wordt nu via de .env file beheerd
+      - NEXTCLOUD_DATADIR=${NEXTCLOUD_DATA_PATH}
+      # De rest van de variabelen wordt beheerd door AIO zelf.
+      - APACHE_PORT=11000
+    ports:
+      - "8081:8080"
+      - "8443:8443"
+    networks:
+      - "nextcloud-aio_default"
+      - "nextcloud-aio"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"
+    restart: "always"
+
+volumes:
+  nextcloud_aio_mastercontainer:
+    external: true

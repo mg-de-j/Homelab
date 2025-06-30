@@ -1,0 +1,93 @@
+version: "3.6"
+
+networks:
+  torrent_default:
+    external: true
+    name: "torrent_default"
+
+services:
+  wireguard:
+    container_name: "wireguard"
+    image: "thrnz/docker-wireguard-pia:latest"
+    command: ["/scripts/run"]
+    environment:
+      - PORT_FORWARDING_SCRIPT=/scripts/update-qbittorrent-port.sh
+      - LOCAL_NETWORK=${LOCAL_NETWORK}
+      - USER=${PIA_USER}
+      - PASS=${PIA_PASS}
+      - LOC=${PIA_LOCATION}
+      - PORT_FORWARDING=true
+    networks:
+      - "torrent_default"
+    ports:
+      - "8080:8080" # Voor qBittorrent WebUI
+      - "9696:9696" # Voor Prowlarr WebUI
+    volumes:
+      - "${DOCKER_BASE_PATH}/torrent/scripts/update-qbittorrent-port.sh:/scripts/update-qbittorrent-port.sh"
+      - "286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:/pia"
+      - "2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:/pia-shared"
+    restart: "unless-stopped"
+    healthcheck:
+      test: ["CMD-SHELL", "ping -c 1 1.1.1.1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  qbittorrent:
+    container_name: "qbittorrent"
+    image: "lscr.io/linuxserver/qbittorrent:4.6.7"
+    network_mode: "service:wireguard"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+    volumes:
+      - "${DOCKER_BASE_PATH}/torrent/qbittorrent:/config"
+      - "${DATA_BASE_PATH}:/data"
+    depends_on:
+      wireguard:
+        condition: service_healthy
+    restart: "unless-stopped"
+
+  prowlarr:
+    container_name: "prowlarr"
+    image: "lscr.io/linuxserver/prowlarr:1.37.0.5076-ls119"
+    network_mode: "service:wireguard"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DOCKER_BASE_PATH}/torrent/prowlarr:/config"
+    depends_on:
+      wireguard:
+        condition: service_healthy
+    restart: "unless-stopped"
+
+  cross-seed:
+    container_name: "cross-seed"
+    image: "ghcr.io/cross-seed/cross-seed:6"
+    command: ["daemon"]
+    networks:
+      - "torrent_default"
+    ports:
+      - "2468:2468"
+    volumes:
+      - "${DOCKER_BASE_PATH}/torrent/cross-seed:/config"
+      - "${DATA_BASE_PATH}:/data"
+    restart: "unless-stopped"
+
+  deunhealth:
+    container_name: "deunhealth"
+    image: "qmcgaw/deunhealth"
+    network_mode: "none"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: "always"
+
+volumes:
+  286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:
+    external: true
+  2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:
+    external: true

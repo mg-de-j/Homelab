@@ -1,0 +1,54 @@
+version: "3.6"
+
+networks:
+  player_default:
+    external: true
+    name: "player_default"
+
+services:
+  jellyfin:
+    container_name: "jellyfin"
+    image: "jellyfin/jellyfin:10.10.7"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    networks:
+      - "player_default"
+    ports:
+      - "8096:8096"
+    volumes:
+      - "${DOCKER_BASE_PATH}/player/jellyfin:/config"
+      - "${DATA_BASE_PATH}:/data"
+      - "61892c2d44b50d79a6f11a5ba095f04347a7290905658f5856ab6c363a199c55:/cache"
+    restart: "unless-stopped"
+
+  plex:
+    container_name: "plex"
+    image: "lscr.io/linuxserver/plex:1.41.7.9799-5bce000f7-ls265"
+    network_mode: "host"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+    volumes:
+      - "${DOCKER_BASE_PATH}/player/plex:/config"
+      - "${DATA_BASE_PATH}:/data"
+    restart: "unless-stopped"
+
+  tautulli:
+    container_name: "tautulli"
+    image: "ghcr.io/tautulli/tautulli:v2.13.4"
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - "${DOCKER_BASE_PATH}/player/tautulli:/config"
+
+volumes:
+  61892c2d44b50d79a6f11a5ba095f04347a7290905658f5856ab6c363a199c55:
+    external: true
