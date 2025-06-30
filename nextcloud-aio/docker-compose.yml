@@ -5,6 +5,8 @@ networks:
   nextcloud-aio_default:
     external: true
     name: "nextcloud-aio_default"
+  proxy-netwerk:
+    external: true
 
 services:
   nextcloud-aio-mastercontainer:
@@ -21,6 +23,7 @@ services:
     networks:
       - "nextcloud-aio_default"
       - "nextcloud-aio"
+      - proxy-netwerk
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "nextcloud_aio_mastercontainer:/mnt/docker-aio-config"

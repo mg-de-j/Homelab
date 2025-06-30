@@ -2,6 +2,8 @@ networks:
   torrent_default:
     external: true
     name: "torrent_default"
+  proxy-netwerk:
+    external: true
 
 services:
   wireguard:
@@ -17,6 +19,7 @@ services:
       - PORT_FORWARDING=true
     networks:
       - "torrent_default"
+      - proxy-netwerk
     ports:
       - "8080:8080" # Voor qBittorrent WebUI
       - "9696:9696" # Voor Prowlarr WebUI
