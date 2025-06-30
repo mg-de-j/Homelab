@@ -21,6 +21,8 @@ services:
       # De volgende variabelen zijn nodig voor de interne communicatie
       - REDIS_HOSTNAME=immich_redis
       - DATABASE_HOSTNAME=immich_postgres
+      - NODE_ENV=production
+      - IMMICH_REVERSE_PROXY_URL=https://fotos.mgdej.nl
     networks:
       # Toegang via de reverse proxy
       - default
