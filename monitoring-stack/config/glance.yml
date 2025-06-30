@@ -3,50 +3,48 @@ version: 1
 server:
   # The host to bind to, defaults to 0.0.0.0
   host: 0.0.0.0
-  # The port to bind to, defaults to 8080
+  # De poort is aangepast om conflicten te voorkomen
   port: 8081
 # A list of pages to display in the dashboard
 pages:
   # The first page to display
   - name: My Dashboard
-    # A list of rows to display on the page
-    rows:
-      # The first row to display
-      - name: System
-        # A list of blocks to display in the row
-        blocks:
-          # The first block to display
+    # --- GECORRIGEERDE STRUCTUUR ---
+    # We voegen expliciet een 'columns' sectie toe.
+    columns:
+      - width: 100% # Een enkele kolom die de volledige breedte inneemt
+        # Een lijst met rijen om weer te geven op de pagina
+        rows:
+          # De eerste rij
           - name: System
-            # The type of block to display
-            type: system
-            # The properties of the block
-            properties:
-              # A list of metrics to display
-              metrics:
-                - name: CPU
-                  type: cpu
-                - name: Memory
-                  type: memory
-                - name: Storage
-                  type: storage
-                  # The properties of the metric
-                  properties:
-                    # The path to the storage device
-                    path: /
-          - name: Docker
-            type: docker
-            properties:
-              # A list of containers to display
-              containers:
-                # You can specify containers by name or id
-                - glance
-      - name: Links
-        blocks:
+            # Een lijst met blokken om weer te geven in de rij
+            blocks:
+              # Het eerste blok
+              - name: System
+                type: system
+                properties:
+                  metrics:
+                    - name: CPU
+                      type: cpu
+                    - name: Memory
+                      type: memory
+                    - name: Storage
+                      type: storage
+                      properties:
+                        path: /
+              - name: Docker
+                type: docker
+                properties:
+                  containers:
+                    - glance
+          # De tweede rij
           - name: Links
-            type: links
-            properties:
-              links:
-                - name: GitHub
-                  url: https://github.com/glanceapp/glance
-                - name: Docs
-                  url: https://glanceapp.github.io/glance/
+            blocks:
+              - name: Links
+                type: links
+                properties:
+                  links:
+                    - name: GitHub
+                      url: https://github.com/glanceapp/glance
+                    - name: Docs
+                      url: https://glanceapp.github.io/glance/

@@ -9,22 +9,24 @@ services:
   immich-server:
     container_name: immich_server
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION}
+    # --- NIEUWE REGEL ---
+    # Maak de poort expliciet beschikbaar voor andere containers in het netwerk,
+    # zonder deze te publiceren op de host.
+    expose:
+      - "2283"
     volumes:
       - ${IMMICH_UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
     environment:
-      # Deze variabelen worden uit uw .env bestand gehaald
       - DB_PASSWORD=${IMMICH_DB_PASSWORD}
       - DB_USERNAME=${IMMICH_DB_USERNAME}
       - DB_DATABASE_NAME=${IMMICH_DB_DATABASE_NAME}
       - TZ=${TZ}
-      # De volgende variabelen zijn nodig voor de interne communicatie
       - REDIS_HOSTNAME=immich_redis
       - DATABASE_HOSTNAME=immich_postgres
       - NODE_ENV=production
       - IMMICH_REVERSE_PROXY_URL=https://fotos.mgdej.nl
     networks:
-      # Toegang via de reverse proxy
       - default
       - proxy-netwerk
     depends_on:
@@ -34,7 +36,6 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    # Specifieke aanpassing voor Raspberry Pi (ARM) hardware acceleratie 
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION}-armnn
     volumes:
       - model-cache:/cache
