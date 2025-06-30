@@ -4,7 +4,7 @@ server:
   # The host to bind to, defaults to 0.0.0.0
   host: 0.0.0.0
   # De poort is aangepast om conflicten te voorkomen
-  port: 8081
+  port: 8082
 # A list of pages to display in the dashboard
 pages:
   # The first page to display
