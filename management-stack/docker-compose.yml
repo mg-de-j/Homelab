@@ -6,16 +6,16 @@ networks:
     name: "proxy-netwerk"
 
 services:
-  portainer:
-    container_name: "portainer"
-    image: "portainer/portainer-ce:lts"
-    ports:
-      - "8000:8000"
-      - "9443:9443"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "portainer_data:/data"
-    restart: "always"
+  # portainer:
+  #   container_name: "portainer"
+  #   image: "portainer/portainer-ce:lts"
+  #   ports:
+  #     - "8000:8000"
+  #     - "9443:9443"
+  #   volumes:
+  #     - "/var/run/docker.sock:/var/run/docker.sock"
+  #     - "portainer_data:/data"
+  #   restart: "always"
 
   nginx-proxy-manager:
     container_name: "nginx-proxy-manager"
