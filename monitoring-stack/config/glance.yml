@@ -8,43 +8,62 @@ server:
 # A list of pages to display in the dashboard
 pages:
   # The first page to display
-  - name: My Dashboard
-    # --- GECORRIGEERDE STRUCTUUR ---
-    # We voegen expliciet een 'columns' sectie toe.
+  - name: Startpage
+    width: slim
+    hide-desktop-navigation: true
+    center-vertically: true
     columns:
-      - width: 100% # Een enkele kolom die de volledige breedte inneemt
-        # Een lijst met rijen om weer te geven op de pagina
-        rows:
-          # De eerste rij
-          - name: System
-            # Een lijst met blokken om weer te geven in de rij
-            blocks:
-              # Het eerste blok
-              - name: System
-                type: system
-                properties:
-                  metrics:
-                    - name: CPU
-                      type: cpu
-                    - name: Memory
-                      type: memory
-                    - name: Storage
-                      type: storage
-                      properties:
-                        path: /
-              - name: Docker
-                type: docker
-                properties:
-                  containers:
-                    - glance
-          # De tweede rij
-          - name: Links
-            blocks:
-              - name: Links
-                type: links
-                properties:
-                  links:
-                    - name: GitHub
-                      url: https://github.com/glanceapp/glance
-                    - name: Docs
-                      url: https://glanceapp.github.io/glance/
+      - size: full
+        widgets:
+          - type: search
+            autofocus: true
+
+          - type: monitor
+            cache: 1m
+            title: Services
+            sites:
+              - title: Jellyfin
+                url: https://yourdomain.com/
+                icon: si:jellyfin
+              - title: Gitea
+                url: https://yourdomain.com/
+                icon: si:gitea
+              - title: qBittorrent # only for Linux ISOs, of course
+                url: https://yourdomain.com/
+                icon: si:qbittorrent
+              - title: Immich
+                url: https://yourdomain.com/
+                icon: si:immich
+              - title: AdGuard Home
+                url: https://yourdomain.com/
+                icon: si:adguard
+              - title: Vaultwarden
+                url: https://yourdomain.com/
+                icon: si:vaultwarden
+
+          - type: bookmarks
+            groups:
+              - title: General
+                links:
+                  - title: Gmail
+                    url: https://mail.google.com/mail/u/0/
+                  - title: Amazon
+                    url: https://www.amazon.com/
+                  - title: Github
+                    url: https://github.com/
+              - title: Entertainment
+                links:
+                  - title: YouTube
+                    url: https://www.youtube.com/
+                  - title: Prime Video
+                    url: https://www.primevideo.com/
+                  - title: Disney+
+                    url: https://www.disneyplus.com/
+              - title: Social
+                links:
+                  - title: Reddit
+                    url: https://www.reddit.com/
+                  - title: Twitter
+                    url: https://twitter.com/
+                  - title: Instagram
+                    url: https://www.instagram.com/
