@@ -1,0 +1,52 @@
+# See the docs for more information: https://glanceapp.github.io/glance/
+version: 1
+server:
+  # The host to bind to, defaults to 0.0.0.0
+  host: 0.0.0.0
+  # The port to bind to, defaults to 8080
+  port: 8080
+# A list of pages to display in the dashboard
+pages:
+  # The first page to display
+  - name: My Dashboard
+    # A list of rows to display on the page
+    rows:
+      # The first row to display
+      - name: System
+        # A list of blocks to display in the row
+        blocks:
+          # The first block to display
+          - name: System
+            # The type of block to display
+            type: system
+            # The properties of the block
+            properties:
+              # A list of metrics to display
+              metrics:
+                - name: CPU
+                  type: cpu
+                - name: Memory
+                  type: memory
+                - name: Storage
+                  type: storage
+                  # The properties of the metric
+                  properties:
+                    # The path to the storage device
+                    path: /
+          - name: Docker
+            type: docker
+            properties:
+              # A list of containers to display
+              containers:
+                # You can specify containers by name or id
+                - glance
+      - name: Links
+        blocks:
+          - name: Links
+            type: links
+            properties:
+              links:
+                - name: GitHub
+                  url: https://github.com/glanceapp/glance
+                - name: Docs
+                  url: https://glanceapp.github.io/glance/
