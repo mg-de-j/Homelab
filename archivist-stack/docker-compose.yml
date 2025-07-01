@@ -33,8 +33,10 @@ services:
       retries: 3
       start_period: 30s
     depends_on:
-      - archivist-es
-      - archivist-redis
+      archivist-es:
+        condition: service_healthy # Wacht tot ES gezond is
+      archivist-redis:
+        condition: service_healthy # Wacht tot Redis gezond is
 
   archivist-redis:
     container_name: archivist-redis
@@ -42,6 +44,11 @@ services:
     restart: unless-stopped
     volumes:
       - ${TA_REDIS_LOCATION}:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   archivist-es:
     container_name: archivist-es
@@ -61,4 +68,10 @@ services:
         hard: -1
     volumes:
       - ${TA_ES_LOCATION}:/usr/share/elasticsearch/data
-
+    healthcheck:
+      # Controleert of de Elasticsearch API reageert
+      test: ["CMD-SHELL", "curl -s --user elastic:${ELASTIC_PASSWORD} -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s # Geef ES een minuut om op te starten
