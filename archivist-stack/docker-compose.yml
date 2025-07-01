@@ -53,7 +53,7 @@ services:
   archivist-es:
     container_name: archivist-es
     # Officiële Elasticsearch image die arm64 ondersteunt.
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.0.3-arm64
     restart: unless-stopped
     environment:
       - "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}"
