@@ -1,0 +1,75 @@
+name: tubearchivist
+
+networks:
+  proxy-netwerk:
+    external: true
+    name: "proxy-netwerk"
+
+services:
+  tubearchivist:
+    container_name: tubearchivist
+    restart: unless-stopped
+    image: bbilly1/tubearchivist:latest
+    volumes:
+      - ${TA_MEDIA_LOCATION}:/youtube
+      - ${TA_CACHE_LOCATION}:/cache
+    environment:
+      - ES_URL=http://archivist-es:9200
+      - REDIS_CON=redis://archivist-redis:6379
+      - HOST_UID=${PUID}
+      - HOST_GID=${PGID}
+      - TA_HOST=${TA_HOST_URL}
+      - TA_USERNAME=${TA_USERNAME}
+      - TA_PASSWORD=${TA_PASSWORD}
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - TZ=${TZ}
+    networks:
+      - default
+      - proxy-netwerk
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 2m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      archivist-es:
+        condition: service_healthy
+      archivist-redis:
+        condition: service_healthy
+
+  archivist-redis:
+    container_name: archivist-redis
+    image: redis:alpine
+    restart: unless-stopped
+    volumes:
+      - ${TA_REDIS_LOCATION}:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  archivist-es:
+    container_name: archivist-es
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.18.0
+    restart: unless-stopped
+    environment:
+      - "ELASTIC_PASSWORD=${ELASTIC_PASSWORD}"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "xpack.security.enabled=true"
+      - "discovery.type=single-node"
+      - "path.repo=/usr/share/elasticsearch/data/snapshot"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ${TA_ES_LOCATION}:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s --user elastic:${ELASTIC_PASSWORD} -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 3m
+
