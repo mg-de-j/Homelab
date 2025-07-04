@@ -34,6 +34,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+      
   # wireguard:
   #   container_name: "wireguard"
   #   image: "thrnz/docker-wireguard-pia:latest"
@@ -116,6 +117,8 @@ services:
     restart: "always"
 
 volumes:
+  pia:
+  pia-shared:
   286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:
     external: true
   2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:
