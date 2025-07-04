@@ -7,32 +7,60 @@ networks:
 
 services:
   wireguard:
-    container_name: "wireguard"
-    image: "thrnz/docker-wireguard-pia:latest"
-    command: ["/scripts/run"]
+    container_name: wireguard
+    image: thrnz/docker-wireguard-pia
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
     environment:
-      - PORT_FORWARDING_SCRIPT=/scripts/update-qbittorrent-port.sh
-      - LOCAL_NETWORK=${LOCAL_NETWORK}
       - USER=${PIA_USER}
       - PASS=${PIA_PASS}
       - LOC=${PIA_LOCATION}
-      - PORT_FORWARDING=true
-    networks:
-      - "torrent_default"
-      - proxy-netwerk
-    ports:
-      - "8080:8080" # Voor qBittorrent WebUI
-      - "9696:9696" # Voor Prowlarr WebUI
+      - LOCAL_NETWORK=${LOCAL_NETWORK}
     volumes:
-      - "${DOCKER_BASE_PATH}/torrent/scripts/update-qbittorrent-port.sh:/scripts/update-qbittorrent-port.sh"
-      - "286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:/pia"
-      - "2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:/pia-shared"
-    restart: "unless-stopped"
+      - pia:/pia
+      - pia-shared:/pia-shared
+    ports:
+      - "8080:8080" # qBittorrent WebUI
+      - "9696:9696" # Prowlarr WebUI
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=1
+    networks:
+      - torrent_default
+      - proxy-netwerk
     healthcheck:
       test: ["CMD-SHELL", "ping -c 1 1.1.1.1 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
+  # wireguard:
+  #   container_name: "wireguard"
+  #   image: "thrnz/docker-wireguard-pia:latest"
+  #   command: ["/scripts/run"]
+  #   environment:
+  #     - PORT_FORWARDING_SCRIPT=/scripts/update-qbittorrent-port.sh
+  #     - LOCAL_NETWORK=${LOCAL_NETWORK}
+  #     - USER=${PIA_USER}
+  #     - PASS=${PIA_PASS}
+  #     - LOC=${PIA_LOCATION}
+  #     - PORT_FORWARDING=true
+  #   networks:
+  #     - "torrent_default"
+  #     - proxy-netwerk
+  #   ports:
+  #     - "8080:8080" # Voor qBittorrent WebUI
+  #     - "9696:9696" # Voor Prowlarr WebUI
+  #   volumes:
+  #     - "${DOCKER_BASE_PATH}/torrent/scripts/update-qbittorrent-port.sh:/scripts/update-qbittorrent-port.sh"
+  #     - "286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:/pia"
+  #     - "2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:/pia-shared"
+  #   restart: "unless-stopped"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "ping -c 1 1.1.1.1 || exit 1"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
 
   qbittorrent:
     container_name: "qbittorrent"
