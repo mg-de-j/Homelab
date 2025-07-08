@@ -8,7 +8,7 @@ networks:
 services:
   wireguard:
     container_name: wireguard
-    image: thrnz/docker-wireguard-pia
+    image: thrnz/docker-wireguard-pia:latest
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -34,38 +34,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      
-  # wireguard:
-  #   container_name: "wireguard"
-  #   image: "thrnz/docker-wireguard-pia:latest"
-  #   command: ["/scripts/run"]
-  #   environment:
-  #     - PORT_FORWARDING_SCRIPT=/scripts/update-qbittorrent-port.sh
-  #     - LOCAL_NETWORK=${LOCAL_NETWORK}
-  #     - USER=${PIA_USER}
-  #     - PASS=${PIA_PASS}
-  #     - LOC=${PIA_LOCATION}
-  #     - PORT_FORWARDING=true
-  #   networks:
-  #     - "torrent_default"
-  #     - proxy-netwerk
-  #   ports:
-  #     - "8080:8080" # Voor qBittorrent WebUI
-  #     - "9696:9696" # Voor Prowlarr WebUI
-  #   volumes:
-  #     - "${DOCKER_BASE_PATH}/torrent/scripts/update-qbittorrent-port.sh:/scripts/update-qbittorrent-port.sh"
-  #     - "286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:/pia"
-  #     - "2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:/pia-shared"
-  #   restart: "unless-stopped"
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "ping -c 1 1.1.1.1 || exit 1"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 3
 
   qbittorrent:
     container_name: "qbittorrent"
-    image: "lscr.io/linuxserver/qbittorrent:4.6.7"
+    image: "lscr.io/linuxserver/qbittorrent:latest"
     network_mode: "service:wireguard"
     environment:
       - PUID=${PUID}
@@ -82,7 +54,7 @@ services:
 
   prowlarr:
     container_name: "prowlarr"
-    image: "lscr.io/linuxserver/prowlarr:1.37.0.5076-ls119"
+    image: "lscr.io/linuxserver/prowlarr:latest"
     network_mode: "service:wireguard"
     environment:
       - PUID=${PUID}
@@ -97,7 +69,7 @@ services:
 
   cross-seed:
     container_name: "cross-seed"
-    image: "ghcr.io/cross-seed/cross-seed:6"
+    image: "ghcr.io/cross-seed/cross-seed:latest"
     command: ["daemon"]
     networks:
       - "torrent_default"
@@ -119,7 +91,3 @@ services:
 volumes:
   pia:
   pia-shared:
-  286e3989bc4ef1ac595091beb5360a4e1faad1776e1db49742b237ddaf637bbb:
-    external: true
-  2c272320666cb0bf842d6080c0f7bd8d990dc705866f01c5b9fd939d7fda08e7:
-    external: true

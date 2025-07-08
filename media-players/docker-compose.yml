@@ -6,7 +6,7 @@ networks:
 services:
   jellyfin:
     container_name: "jellyfin"
-    image: "jellyfin/jellyfin:10.10.7"
+    image: "jellyfin/jellyfin:latest"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -23,7 +23,7 @@ services:
 
   plex:
     container_name: "plex"
-    image: "lscr.io/linuxserver/plex:1.41.7.9799-5bce000f7-ls265"
+    image: "lscr.io/linuxserver/plex:latest"
     network_mode: "host"
     environment:
       - PUID=${PUID}
@@ -37,7 +37,7 @@ services:
 
   tautulli:
     container_name: "tautulli"
-    image: "ghcr.io/tautulli/tautulli:v2.13.4"
+    image: "ghcr.io/tautulli/tautulli:latest"
     restart: unless-stopped
     network_mode: "host"
     environment:
