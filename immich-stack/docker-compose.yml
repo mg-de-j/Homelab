@@ -38,7 +38,7 @@ services:
     container_name: immich_machine_learning
     image: ghcr.io/immich-app/immich-machine-learning:${IMMICH_VERSION}-armnn
     volumes:
-      - model-cache:/cache
+      - ${IMMICH_MODEL_CACHE_LOCATION}:/cache
     environment:
       - TZ=${TZ}
     restart: always
@@ -59,6 +59,3 @@ services:
     volumes:
       - ${IMMICH_DB_LOCATION}:/var/lib/postgresql/data
     restart: always
-
-volumes:
-  model-cache:
