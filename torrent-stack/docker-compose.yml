@@ -47,6 +47,7 @@ services:
     volumes:
       - "${DOCKER_BASE_PATH}/torrent/qbittorrent:/config"
       - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
     depends_on:
       wireguard:
         condition: service_healthy
