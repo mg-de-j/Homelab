@@ -18,6 +18,7 @@ services:
     volumes:
       - "${DOCKER_BASE_PATH}/player/jellyfin:/config"
       - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
       - "61892c2d44b50d79a6f11a5ba095f04347a7290905658f5856ab6c363a199c55:/cache"
     restart: "unless-stopped"
 
