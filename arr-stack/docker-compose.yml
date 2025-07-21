@@ -22,7 +22,8 @@ services:
 
   radarr:
     container_name: "radarr"
-    image: "lscr.io/linuxserver/radarr:latest"
+    build: ./radarr-custom
+    #image: "lscr.io/linuxserver/radarr:latest"
     environment:
       - TZ=${TZ}
       - PUID=${PUID}
