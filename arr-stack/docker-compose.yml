@@ -11,9 +11,14 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - MAKEMKV_KEY=BETA
+      - AUTO_DISC_RIPPER_MIN_TITLE_LENGTH=300
+      - WEB_FILE_MANAGER=1
+      - AUTO_DISC_RIPPER=1
       - MKV_OUTPUT_DIR=/output  # Map binnen de container voor de .mkv bestanden
       - MKV_WATCH_DIR=/watch    # Map die de container in de gaten houdt voor .iso's
       - MKV_AUTO_CONVERT=true   # Automatisch converteren als een .iso wordt gevonden
+      - AUTO_DISC_RIPPER=
     ports:
       - "5800:5800" # Optionele poort voor de web-interface
     volumes:
