@@ -17,9 +17,9 @@ services:
     ports:
       - "5800:5800" # Optionele poort voor de web-interface
     volumes:
-      - "${DATA_BASE_PATH}/remux/watch:/watch"     # We koppelen een 'watch' map op je host
-      - "${DATA_BASE_PATH}/remux/output:/output"   # We koppelen een 'output' map op je host
-      - "${DOCKER_BASE_PATH}/arr/makemkv:/config"  # Config map voor MakeMKV
+      - "${SAMBA_PATH}/remux/watch:/watch"
+      - "${SAMBA_PATH}/remux/output:/output"
+      - "${DOCKER_BASE_PATH}/arr/makemkv:/config"
     restart: "unless-stopped"
 
   lidarr:
@@ -53,8 +53,6 @@ services:
       - "${DOCKER_BASE_PATH}/arr/radarr:/config"
       - "${DATA_BASE_PATH}:/data"
       - "${SAMBA_PATH}:/samba"
-      - "${DATA_BASE_PATH}/remux/watch:/remux/watch"
-      - "${DATA_BASE_PATH}/remux/output:/remux/output"
     restart: "unless-stopped"
 
   sonarr:
