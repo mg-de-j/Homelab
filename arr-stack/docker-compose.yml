@@ -6,7 +6,7 @@ networks:
 services:
   makemkv:
     container_name: "makemkv"
-    image: "jlesage/docker-makemkv:latest"
+    image: "jlesage/makemkv:latest"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
