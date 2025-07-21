@@ -5,10 +5,8 @@ FROM lscr.io/linuxserver/radarr:latest
 USER root
 
 # Installeer MakeMKV en ruim daarna op
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends makemkv-bin makemkv-oss && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk add --no-cache makemkv
 
 # Maak de scriptmap en kopieer het script erin
 RUN mkdir -p /scripts
