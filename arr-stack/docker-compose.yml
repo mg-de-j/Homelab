@@ -4,6 +4,24 @@ networks:
     name: "arr_default"
 
 services:
+  makemkv:
+    container_name: "makemkv"
+    image: "jlesage/docker-makemkv:latest"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MKV_OUTPUT_DIR=/output  # Map binnen de container voor de .mkv bestanden
+      - MKV_WATCH_DIR=/watch    # Map die de container in de gaten houdt voor .iso's
+      - MKV_AUTO_CONVERT=true   # Automatisch converteren als een .iso wordt gevonden
+    ports:
+      - "5800:5800" # Optionele poort voor de web-interface
+    volumes:
+      - "${DATA_BASE_PATH}/remux/watch:/watch"     # We koppelen een 'watch' map op je host
+      - "${DATA_BASE_PATH}/remux/output:/output"   # We koppelen een 'output' map op je host
+      - "${DOCKER_BASE_PATH}/arr/makemkv:/config"  # Config map voor MakeMKV
+    restart: "unless-stopped"
+
   lidarr:
     container_name: "lidarr"
     image: "lscr.io/linuxserver/lidarr:latest"
@@ -22,8 +40,7 @@ services:
 
   radarr:
     container_name: "radarr"
-    build: ./radarr-custom
-    #image: "lscr.io/linuxserver/radarr:latest"
+    image: "lscr.io/linuxserver/radarr:latest"
     environment:
       - TZ=${TZ}
       - PUID=${PUID}
@@ -36,6 +53,8 @@ services:
       - "${DOCKER_BASE_PATH}/arr/radarr:/config"
       - "${DATA_BASE_PATH}:/data"
       - "${SAMBA_PATH}:/samba"
+      - "${DATA_BASE_PATH}/remux/watch:/remux/watch"
+      - "${DATA_BASE_PATH}/remux/output:/remux/output"
     restart: "unless-stopped"
 
   sonarr:
