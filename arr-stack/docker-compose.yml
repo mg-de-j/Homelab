@@ -35,7 +35,7 @@ services:
     restart: "unless-stopped"
 
   radarr3D:
-    container_name: "radarr 3D"
+    container_name: "radarr3D"
     image: "lscr.io/linuxserver/radarr:latest"
     environment:
       - TZ=${TZ}
@@ -44,7 +44,7 @@ services:
     networks:
       - "arr_default"
     ports:
-      - "7878:7878"
+      - "7979:7979"
     volumes:
       - "${DOCKER_BASE_PATH}/arr/radarr 3D:/config"
       - "${DATA_BASE_PATH}:/data"
