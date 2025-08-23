@@ -34,23 +34,6 @@ services:
       - "${DATA_BASE_PATH}:/data"
     restart: "unless-stopped"
 
-  radarr3D:
-    container_name: "radarr3D"
-    image: "lscr.io/linuxserver/radarr:latest"
-    environment:
-      - TZ=${TZ}
-      - PUID=${PUID}
-      - PGID=${PGID}
-    networks:
-      - "arr_default"
-    ports:
-      - "7979:7979"
-    volumes:
-      - "${DOCKER_BASE_PATH}/arr/radarr 3D:/config"
-      - "${DATA_BASE_PATH}:/data"
-      - "${SAMBA_PATH}:/samba"
-    restart: "unless-stopped"
-
   radarr:
     container_name: "radarr"
     image: "lscr.io/linuxserver/radarr:latest"
@@ -61,9 +44,26 @@ services:
     networks:
       - "arr_default"
     ports:
-      - "7878:7878"
+      - "7979:7979"
     volumes:
       - "${DOCKER_BASE_PATH}/arr/radarr:/config"
+      - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
+    restart: "unless-stopped"
+
+  radarr3D:
+    container_name: "radarr3D"
+    image: "lscr.io/linuxserver/radarr:latest"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - "arr_default"
+    ports:
+      - "7878:7878"
+    volumes:
+      - "${DOCKER_BASE_PATH}/arr/radarr 3D:/config"
       - "${DATA_BASE_PATH}:/data"
       - "${SAMBA_PATH}:/samba"
     restart: "unless-stopped"
