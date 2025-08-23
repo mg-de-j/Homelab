@@ -4,19 +4,19 @@ networks:
     name: "arr_default"
 
 services:
-  makemkv:
-    container_name: "makemkv"
-    image: "jlesage/makemkv:latest"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-    ports:
-      - "5800:5800" # Optionele poort voor de web-interface
-    volumes:
-      - "${SAMBA_PATH}/remux/watch:/watch"
-      - "${SAMBA_PATH}/remux/output:/output"
-      - "${DOCKER_BASE_PATH}/arr/makemkv:/config"
-    restart: "unless-stopped"
+  # makemkv:
+  #   container_name: "makemkv"
+  #   image: "jlesage/makemkv:latest"
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #   ports:
+  #     - "5800:5800" # Optionele poort voor de web-interface
+  #   volumes:
+  #     - "${SAMBA_PATH}/remux/watch:/watch"
+  #     - "${SAMBA_PATH}/remux/output:/output"
+  #     - "${DOCKER_BASE_PATH}/arr/makemkv:/config"
+  #   restart: "unless-stopped"
 
   lidarr:
     container_name: "lidarr"
@@ -35,6 +35,23 @@ services:
     restart: "unless-stopped"
 
   radarr:
+    container_name: "radarr 3D"
+    image: "lscr.io/linuxserver/radarr:latest"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - "arr_default"
+    ports:
+      - "7878:7878"
+    volumes:
+      - "${DOCKER_BASE_PATH}/arr/radarr 3D:/config"
+      - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
+    restart: "unless-stopped"
+
+  radarr 3D:
     container_name: "radarr"
     image: "lscr.io/linuxserver/radarr:latest"
     environment:
