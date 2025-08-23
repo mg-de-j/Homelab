@@ -34,7 +34,7 @@ services:
       - "${DATA_BASE_PATH}:/data"
     restart: "unless-stopped"
 
-  radarr:
+  radarr3D:
     container_name: "radarr 3D"
     image: "lscr.io/linuxserver/radarr:latest"
     environment:
@@ -51,7 +51,7 @@ services:
       - "${SAMBA_PATH}:/samba"
     restart: "unless-stopped"
 
-  radarr 3D:
+  radarr:
     container_name: "radarr"
     image: "lscr.io/linuxserver/radarr:latest"
     environment:
