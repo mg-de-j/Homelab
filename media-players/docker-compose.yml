@@ -34,6 +34,7 @@ services:
     volumes:
       - "${DOCKER_BASE_PATH}/player/plex:/config"
       - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
     restart: "unless-stopped"
 
   tautulli:
