@@ -12,7 +12,7 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       # Default HTTP Port
-      - "8000:80/tcp"
+      - "8008:80/tcp"
       # Default HTTPs Port. FTL will generate a self-signed certificate
       - "8443:443/tcp"
     environment:
