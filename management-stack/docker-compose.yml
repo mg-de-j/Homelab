@@ -17,7 +17,7 @@ services:
       - "7443:443/tcp"
     environment:
       TZ: 'Europe/Amsterdam'
-      FTLCONF_webserver_api_password: 'correct horse battery staple'
+      FTLCONF_webserver_api_password: 'd7StnU0W!ENHL9oi'
       FTLCONF_dns_listeningMode: 'all'
 
     volumes:
