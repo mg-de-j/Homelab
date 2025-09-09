@@ -14,7 +14,7 @@ services:
       # Default HTTP Port
       - "8008:80/tcp"
       # Default HTTPs Port. FTL will generate a self-signed certificate
-      - "8443:443/tcp"
+      - "7443:443/tcp"
     environment:
       TZ: 'Europe/Amsterdam'
       FTLCONF_webserver_api_password: 'correct horse battery staple'
