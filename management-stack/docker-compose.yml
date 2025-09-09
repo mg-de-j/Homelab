@@ -4,6 +4,30 @@ networks:
     name: "proxy-netwerk"
 
 services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      # DNS Ports
+      - "53:53/tcp"
+      - "53:53/udp"
+      # Default HTTP Port
+      - "8000:80/tcp"
+      # Default HTTPs Port. FTL will generate a self-signed certificate
+      - "8443:443/tcp"
+    environment:
+      TZ: 'Europe/Amsterdam'
+      FTLCONF_webserver_api_password: 'correct horse battery staple'
+      FTLCONF_dns_listeningMode: 'all'
+
+    volumes:
+      - './etc-pihole:/etc/pihole'
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_NICE
+    restart: unless-stopped
+  
   nginx-proxy-manager:
     container_name: "nginx-proxy-manager"
     image: "jc21/nginx-proxy-manager:latest"
