@@ -17,15 +17,44 @@ pages:
             cache: 1m
             title: Services
             sites:
+              # Media & Download Stack
               - title: Jellyfin
                 url: https://jellyfin.mgdej.nl/
                 icon: si:jellyfin
+              - title: Plex
+                url: http://192.168.178.211:32400/web
+                icon: si:plex
               - title: qBittorrent
                 url: https://qbit.mgdej.nl/
                 icon: si:qbittorrent
+              - title: Radarr
+                url: http://192.168.178.211:7979
+                icon: si:radarr
+              - title: Sonarr
+                url: http://192.168.178.211:8989
+                icon: si:sonarr
+              - title: Lidarr
+                url: http://192.168.178.211:8686
+                icon: si:lidarr
+              - title: Prowlarr
+                url: http://192.168.178.211:9697 
+                icon: si:prowlarr
+
+              # Cloud & Foto's
+              - title: Nextcloud
+                url: https://nextcloud.mgdej.nl
+                icon: si:nextcloud
               - title: Immich
                 url: https://immich.mgdej.nl/
                 icon: si:immich
+
+              # Huis & Beheer
+              - title: Home Assistant
+                url: http://192.168.178.211:8123 
+                icon: si:homeassistant
+              - title: NGINX Proxy Manager
+                url: http://192.168.178.211:81
+                icon: si:nginxproxymanager
 
           - type: bookmarks
             groups:
@@ -37,3 +66,19 @@ pages:
                     url: https://www.amazon.com/
                   - title: Github
                     url: https://github.com/
+              - title: Entertainment
+                links:
+                  - title: YouTube
+                    url: https://www.youtube.com/
+                  - title: Prime Video
+                    url: https://www.primevideo.com/
+                  - title: Disney+
+                    url: https://www.disneyplus.com/
+              - title: Social
+                links:
+                  - title: Reddit
+                    url: https://www.reddit.com/
+                  - title: Twitter
+                    url: https://twitter.com/
+                  - title: Instagram
+                    url: https://www.instagram.com/
