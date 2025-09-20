@@ -37,17 +37,17 @@ services:
       - "${SAMBA_PATH}:/samba"
     restart: "unless-stopped"
 
-  tautulli:
-    container_name: "tautulli"
-    image: "ghcr.io/tautulli/tautulli:latest"
-    restart: unless-stopped
-    network_mode: "host"
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - "${DOCKER_BASE_PATH}/player/tautulli:/config"
+  # tautulli:
+  #   container_name: "tautulli"
+  #   image: "ghcr.io/tautulli/tautulli:latest"
+  #   restart: unless-stopped
+  #   network_mode: "host"
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - "${DOCKER_BASE_PATH}/player/tautulli:/config"
 
 volumes:
   61892c2d44b50d79a6f11a5ba095f04347a7290905658f5856ab6c363a199c55:
