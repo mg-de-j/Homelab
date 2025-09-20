@@ -1,13 +1,8 @@
-# See the docs for more information: https://glanceapp.github.io/glance/
 version: 1
 server:
-  # The host to bind to, defaults to 0.0.0.0
-  host: 0.0.0.0
   # De poort is aangepast om conflicten te voorkomen
   port: 8082
-# A list of pages to display in the dashboard
 pages:
-  # The first page to display
   - name: Startpage
     width: slim
     hide-desktop-navigation: true
@@ -23,23 +18,14 @@ pages:
             title: Services
             sites:
               - title: Jellyfin
-                url: https://yourdomain.com/
+                url: https://jellyfin.mgdej.nl/
                 icon: si:jellyfin
-              - title: Gitea
-                url: https://yourdomain.com/
-                icon: si:gitea
-              - title: qBittorrent # only for Linux ISOs, of course
-                url: https://yourdomain.com/
+              - title: qBittorrent
+                url: https://qbit.mgdej.nl/
                 icon: si:qbittorrent
               - title: Immich
-                url: https://yourdomain.com/
+                url: https://immich.mgdej.nl/
                 icon: si:immich
-              - title: AdGuard Home
-                url: https://yourdomain.com/
-                icon: si:adguard
-              - title: Vaultwarden
-                url: https://yourdomain.com/
-                icon: si:vaultwarden
 
           - type: bookmarks
             groups:
@@ -51,19 +37,3 @@ pages:
                     url: https://www.amazon.com/
                   - title: Github
                     url: https://github.com/
-              - title: Entertainment
-                links:
-                  - title: YouTube
-                    url: https://www.youtube.com/
-                  - title: Prime Video
-                    url: https://www.primevideo.com/
-                  - title: Disney+
-                    url: https://www.disneyplus.com/
-              - title: Social
-                links:
-                  - title: Reddit
-                    url: https://www.reddit.com/
-                  - title: Twitter
-                    url: https://twitter.com/
-                  - title: Instagram
-                    url: https://www.instagram.com/
