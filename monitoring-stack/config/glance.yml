@@ -28,14 +28,11 @@ pages:
                 url: https://qbit.mgdej.nl/
                 icon: si:qbittorrent
               - title: Radarr
-                url: http://192.168.178.211:7979
+                url: http://192.168.178.211:7878
                 icon: si:radarr
               - title: Sonarr
                 url: http://192.168.178.211:8989
                 icon: si:sonarr
-              - title: Lidarr
-                url: http://192.168.178.211:8686
-                icon: si:lidarr
               - title: Prowlarr
                 url: http://192.168.178.211:9697 
                 icon: si:prowlarr
