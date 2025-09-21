@@ -68,6 +68,16 @@ services:
         condition: service_healthy
     restart: "unless-stopped"
 
+  flaresolverr:
+    container_name: "flaresolverr"
+    image: "ghcr.io/flaresolverr/flaresolverr:latest"
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+    networks:
+      - "torrent_default"
+    restart: "unless-stopped"
+
   cross-seed:
     container_name: "cross-seed"
     image: "ghcr.io/cross-seed/cross-seed:latest"
