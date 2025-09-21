@@ -21,7 +21,7 @@ services:
       - pia:/pia
       - pia-shared:/pia-shared
     ports:
-      - "8088:8080" # qBittorrent WebUI
+      - "8080:8080" # qBittorrent WebUI
       - "9696:9696" # Prowlarr WebUI
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
