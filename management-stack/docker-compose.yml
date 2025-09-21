@@ -28,6 +28,16 @@ services:
   #     - SYS_NICE
   #   restart: unless-stopped
   
+  cloudflared:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiYWE4YTVlZDQyNGZmMTBiMDQ5ODFkZWExNzRhOTE4MzgiLCJ0IjoiZDk0ZTYyOWMtNzhkNC00YjA3LTgyMTAtNTU4YjYyYjc0ZDJiIiwicyI6Ik5URTNORGcxT0RrdE9EUXhNaTAwT1ROakxUbGtZemN0WlRaall6SXpNRGMyWVdOaiJ9
+    networks:
+      - proxy-netwerk
+
   nginx-proxy-manager:
     container_name: "nginx-proxy-manager"
     image: "jc21/nginx-proxy-manager:latest"
