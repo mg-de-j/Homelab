@@ -34,7 +34,7 @@ pages:
                 url: http://192.168.178.211:8989
                 icon: si:sonarr
               - title: Prowlarr
-                url: http://192.168.178.211:9697 
+                url: http://192.168.178.211:9696
                 icon: si:prowlarr
 
               # Cloud & Foto's
