@@ -71,11 +71,13 @@ services:
   flaresolverr:
     container_name: "flaresolverr"
     image: "ghcr.io/flaresolverr/flaresolverr:latest"
+    network_mode: "service:wireguard"
     environment:
       - LOG_LEVEL=info
       - TZ=${TZ}
-    networks:
-      - "torrent_default"
+    depends_on:
+      wireguard:
+        condition: service_healthy
     restart: "unless-stopped"
 
   cross-seed:
