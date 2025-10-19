@@ -42,6 +42,24 @@ services:
       - "${DOCKER_BASE_PATH}/nginx/letsencrypt:/etc/letsencrypt"
     restart: "unless-stopped"
 
+  syncthing:
+    container_name: syncthing
+    image: lscr.io/linuxserver/syncthing:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_BASE_PATH}/syncthing:/config
+      - ${DATA_BASE_PATH}:/data/sync # Voorbeeld-pad voor je data
+    ports:
+      - "8384:8384"     # WebUI poort
+      - "22000:22000/tcp" # Data-overdracht poort
+      - "21027:21027/udp" # Discovery poort
+    networks:
+      - proxy-netwerk
+
 volumes:
   portainer_data:
     external: true
