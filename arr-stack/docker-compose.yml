@@ -18,21 +18,21 @@ services:
   #     - "${DOCKER_BASE_PATH}/arr/makemkv:/config"
   #   restart: "unless-stopped"
 
-  # lidarr:
-  #   container_name: "lidarr"
-  #   image: "lscr.io/linuxserver/lidarr:latest"
-  #   environment:
-  #     - TZ=${TZ}
-  #     - PUID=${PUID}
-  #     - PGID=${PGID}
-  #   networks:
-  #     - "arr_default"
-  #   ports:
-  #     - "8686:8686"
-  #   volumes:
-  #     - "${DOCKER_BASE_PATH}/arr/lidarr:/config"
-  #     - "${DATA_BASE_PATH}:/data"
-  #   restart: "unless-stopped"
+  lidarr:
+    container_name: "lidarr"
+    image: "lscr.io/linuxserver/lidarr:latest"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - "arr_default"
+    ports:
+      - "8686:8686"
+    volumes:
+      - "${DOCKER_BASE_PATH}/arr/lidarr:/config"
+      - "${DATA_BASE_PATH}:/data"
+    restart: "unless-stopped"
 
   # radarr3D:
   #   container_name: "radarr 3D"
