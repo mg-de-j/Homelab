@@ -98,4 +98,5 @@ services:
     volumes:
       - "${DOCKER_BASE_PATH}/arr/whisparr:/config"
       - "${DATA_BASE_PATH}:/data"
+      - "${SAMBA_PATH}:/samba"
     restart: "unless-stopped"
