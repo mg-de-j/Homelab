@@ -83,3 +83,19 @@ services:
       - "${DOCKER_BASE_PATH}/arr/sonarr:/config"
       - "${DATA_BASE_PATH}:/data"
     restart: "unless-stopped"
+
+  whisparr:
+    container_name: "whisparr"
+    image: "lscr.io/linuxserver/whisparr:latest"
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    networks:
+      - "arr_default"
+    ports:
+      - "6969:6969"
+    volumes:
+      - "${DOCKER_BASE_PATH}/arr/whisparr:/config"
+      - "${DATA_BASE_PATH}:/data"
+    restart: "unless-stopped"
