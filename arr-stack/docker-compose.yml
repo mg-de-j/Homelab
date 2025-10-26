@@ -86,7 +86,7 @@ services:
 
   whisparr:
     container_name: "whisparr"
-    image: "lscr.io/linuxserver/whisparr:latest"
+    image: "ghcr.io/hotio/whisparr:latest"
     environment:
       - TZ=${TZ}
       - PUID=${PUID}
